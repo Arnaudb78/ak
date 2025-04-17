@@ -62,6 +62,7 @@ export function SignIn() {
                             <Label htmlFor="sign-in-password">Password</Label>
                             <Input
                                 id="sign-in-password"
+                                type="password"
                                 placeholder="Password of your account"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}

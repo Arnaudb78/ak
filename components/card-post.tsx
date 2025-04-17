@@ -29,6 +29,9 @@ export default function CardPost({ post, author }: CardPostProps) {
                         src={author.picture} 
                         alt="Profile Picture" 
                         className="w-12 h-12 rounded-full object-cover" 
+                        loading="lazy"
+                        width={48}
+                        height={48}
                     />
                     <div>
                         <h1 className="font-semibold">{author.firstname} {author.lastname}</h1>
@@ -47,6 +50,9 @@ export default function CardPost({ post, author }: CardPostProps) {
                         src={post.pictureBefore} 
                         alt="Picture Before" 
                         className="w-full h-64 object-cover rounded-lg" 
+                        loading="lazy"
+                        width={400}
+                        height={256}
                     />
                 </div>
                 <div className="flex flex-col items-center">
@@ -55,6 +61,9 @@ export default function CardPost({ post, author }: CardPostProps) {
                         src={post.pictureAfter} 
                         alt="Picture After" 
                         className="w-full h-64 object-cover rounded-lg" 
+                        loading="lazy"
+                        width={400}
+                        height={256}
                     />
                 </div>
             </div>

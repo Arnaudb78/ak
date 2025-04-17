@@ -1,6 +1,6 @@
 "use client";
 
-import { FormAddPost } from "@/components/form-add-post";
+import CardChallenge from "@/components/card-challenge";
 import { CardPost } from "@/components/card-post";
 import { useEffect, useState } from "react";
 
@@ -25,8 +25,17 @@ interface ApiResponse {
     authors: AuthorData[];
 }
 
+interface ChallengeData {
+    _id: string;
+    title: string;
+    description: string;
+    image: string;
+    month: string;
+}
+
 export default function Community() {
     const [data, setData] = useState<ApiResponse>({ posts: [], authors: [] });
+    const [challenges, setChallenges] = useState<ChallengeData>();
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -35,13 +44,28 @@ export default function Community() {
             setData(data);
         };
         fetchPosts();
+        const fetchChallenges = async () => {
+            const response = await fetch("/api/challenge/get");
+            const data = await response.json();
+            setChallenges(data[0]);
+        };
+        fetchChallenges();
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-start h-screen gap-10">
-            <h1>Community</h1>
-            <FormAddPost />
-            <div className="flex flex-col items-center justify-start gap-8 p-10">
+        <div className="flex flex-col items-center justify-start h-screen bg-[#F5F5F5] py-10">
+            <h1 className="text-xl font-bold">Re_store</h1>
+            <div className="flex flex-col items-center justify-start px-10 py-10 w-full">
+                <CardChallenge challenge={challenges || {
+                    _id: '',
+                    title: '',
+                    description: '',
+                    image: '',
+                    month: ''
+                }} />
+            </div>
+                    
+            <div className="flex flex-col items-center justify-start gap-8 px-10">
                 {data.posts.map((post) => {
                     const author = data.authors.find(a => a._id === post.author);
                     if (!author) return null;

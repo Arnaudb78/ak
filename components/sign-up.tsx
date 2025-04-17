@@ -92,6 +92,7 @@ export function SignUp() {
                             <Label htmlFor="password">Password</Label>
                             <Input
                                 id="password"
+                                type="password"
                                 placeholder="Password of your account"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}

@@ -16,7 +16,6 @@ export async function GET() {
             })),
             authors
         }
-        console.log(allPosts);
         return NextResponse.json(allPosts);
     } catch (error) {
         console.error("Error getting posts:", error);

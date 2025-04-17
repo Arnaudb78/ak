@@ -3,11 +3,21 @@
 import AppBar from "@/components/app-bar";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { Crown } from "lucide-react";
+
+interface Winner {
+    _id: string;
+    firstname: string;
+    lastname: string;
+    picture: string;
+    posts: number;
+}
 
 const PodiumPage = () => {
     const router = useRouter();
     const [selectedTab, setSelectedTab] = useState<'month' | 'history'>('month');
     const [selectedPosition, setSelectedPosition] = useState<number>(1);
+    const [winners, setWinners] = useState<Winner[]>([]);
 
     const handlePositionClick = (position: number) => {
         setSelectedPosition(position);
@@ -17,8 +27,20 @@ const PodiumPage = () => {
         const user = localStorage.getItem("user");
         if (!user) {
             router.push("/");
+        } else {
+            fetchWinners();
         }   
     }, []);
+
+    const fetchWinners = async () => {
+        try {
+            const response = await fetch('/api/users/winner');
+            const data = await response.json();
+            setWinners(data);
+        } catch (error) {
+            console.error('Error fetching winners:', error);
+        }
+    };
 
     const getPositionColor = (position: number) => {
         switch(position) {
@@ -30,17 +52,26 @@ const PodiumPage = () => {
     };
 
     const getPositionData = (position: number) => {
-        return {
-            name: `User ${position}`,
-            points: position * 1000,
-            achievements: ['Achievement 1', 'Achievement 2'],
+        const winner = winners[position - 1];
+        if (!winner) return {
+            name: 'No winner yet',
+            points: 0,
+            achievements: ['No achievements yet'],
             rank: position
+        };
+
+        return {
+            name: `${winner.firstname} ${winner.lastname}`,
+            points: winner.posts,
+            achievements: [`${winner.posts} posts`],
+            rank: position,
+            picture: winner.picture
         };
     };
     
     return (
         <>
-        <div className="px-4">
+        <div className="px-4 pb-24">
             <div className="flex items-center justify-center w-full px-4 pt-20">
                 <h1 className="text-xl font-bold">Re_store</h1>
             </div>
@@ -84,10 +115,14 @@ const PodiumPage = () => {
                             onClick={() => handlePositionClick(2)}
                         >
                             <div className="w-20 h-20 rounded-full bg-gray-300 mb-2 overflow-hidden">
-                                <img src="/profile-placeholder.png" alt="Second place" className="w-full h-full object-cover" />
+                                <img 
+                                    src={winners[1]?.picture || "/profile-placeholder.png"} 
+                                    alt="Second place" 
+                                    className="w-full h-full object-cover" 
+                                />
                             </div>
                             <div className="bg-[#D2EDFF] w-24 h-40 rounded-t-2xl flex items-center justify-center">
-                                <p className=" font-bold text-2xl">2</p>
+                                <p className="font-bold text-2xl">2</p>
                             </div>
                         </div>
 
@@ -98,9 +133,13 @@ const PodiumPage = () => {
                         >
                             <div className="relative">
                                 <div className="w-24 h-24 rounded-full bg-gray-300 mb-2 overflow-hidden">
-                                    <img src="/profile-placeholder.png" alt="First place" className="w-full h-full object-cover" />
+                                    <img 
+                                        src={winners[0]?.picture || "/profile-placeholder.png"} 
+                                        alt="First place" 
+                                        className="w-full h-full object-cover" 
+                                    />
                                 </div>
-                                <div className="absolute -top-2 -left-2 text-3xl rotate-[-15deg]">♛</div>
+                                <div className="absolute -top-3 -left-0 text-3xl rotate-[-30deg]"><Crown /></div>
                             </div>
                             <div className="bg-[#FF6135] w-28 h-48 rounded-t-2xl flex items-center justify-center">
                                 <p className="font-bold text-2xl">1</p>
@@ -113,7 +152,11 @@ const PodiumPage = () => {
                             onClick={() => handlePositionClick(3)}
                         >
                             <div className="w-20 h-20 rounded-full bg-gray-300 mb-2 overflow-hidden">
-                                <img src="/profile-placeholder.png" alt="Third place" className="w-full h-full object-cover" />
+                                <img 
+                                    src={winners[2]?.picture || "/profile-placeholder.png"} 
+                                    alt="Third place" 
+                                    className="w-full h-full object-cover" 
+                                />
                             </div>
                             <div className="bg-[#2BB673] w-24 h-32 rounded-t-2xl flex items-center justify-center">
                                 <p className="font-bold text-2xl">3</p>
@@ -124,21 +167,24 @@ const PodiumPage = () => {
 
                 {/* Detail Square */}
                 {selectedPosition && (
-                    <div className={`w-full px-8 ${getPositionColor(selectedPosition)} rounded-2xl p-4`}>
+                    <div className={`w-full px-8 ${getPositionColor(selectedPosition)} rounded-2xl p-4 -mt-4`}>
                         <div className="flex justify-between items-center mb-4">
                             <div className="flex items-center gap-2">
-                                <span className="text-2xl">👑</span>
                                 <h2 className="text-2xl font-bold">Détails</h2>
                             </div>
                         </div>
                         <div className="bg-white rounded-xl p-4">
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-16 h-16 rounded-full bg-gray-300 overflow-hidden">
-                                    <img src="/profile-placeholder.png" alt={`Position ${selectedPosition}`} className="w-full h-full object-cover" />
+                                    <img 
+                                        src={getPositionData(selectedPosition).picture || "/profile-placeholder.png"} 
+                                        alt={`Position ${selectedPosition}`} 
+                                        className="w-full h-full object-cover" 
+                                    />
                                 </div>
                                 <div>
                                     <h3 className="font-bold text-lg">{getPositionData(selectedPosition).name}</h3>
-                                    <p className="text-gray-600">Points: {getPositionData(selectedPosition).points}</p>
+                                    <p className="text-gray-600">Posts: {getPositionData(selectedPosition).points}</p>
                                 </div>
                             </div>
                             <div>
@@ -153,8 +199,8 @@ const PodiumPage = () => {
                     </div>
                 )}
             </div>
-                <AppBar />
-            </div>
+            <AppBar />
+        </div>
         </>
     )
 }

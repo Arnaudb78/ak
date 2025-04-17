@@ -21,6 +21,7 @@ interface User {
     followers: number;
     following: number;
     posts: number;
+    podium: number;
 }
 
 export default function Profil() { 
@@ -32,11 +33,25 @@ export default function Profil() {
 
         if (!getUserFromLocalStorage) {
             router.push("/");
+            return;
         }
 
         const user = JSON.parse(getUserFromLocalStorage || "{}");
+        
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch(`/api/users/getbyId?id=${user._id}`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch user data');
+                }
+                const userData = await response.json();
+                setUser(userData);
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        };
 
-        setUser(user);
+        fetchUserData();
     }, []);
 
     const handleAccount = () => {
@@ -92,7 +107,7 @@ export default function Profil() {
             <div className="flex items-center justify-start px-10 py-6 gap-4">
                 <div className="bg-[#D2EDFF] rounded-2xl p-4 w-full">
                     <p>Podium</p>
-                    <p className="font-bold">{user?.posts} fois</p>
+                    <p className="font-bold">{user?.podium} fois</p>
                 </div>
                 <div className="bg-[#FF6135] rounded-2xl p-4 w-full">
                     <p>Post</p>
@@ -102,7 +117,7 @@ export default function Profil() {
             <div className="flex items-center justify-start px-10 gap-4">
                 <div className="bg-[#D2EDFF] rounded-2xl p-4 w-full">
                     <p>Carbone</p>
-                    <p className="font-bold">{user?.posts} fois</p>
+                    <p className="font-bold">99.5 kg</p>
                 </div>
             </div>
             <div className="flex items-center justify-start px-10 py-6 gap-4">

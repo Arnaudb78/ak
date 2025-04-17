@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    podium: {
+        type: Number,
+        default: 0
+    }
     
 });
 

@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import dbConnect from "@/database/connect";
 import User from "@/models/User";
 
-async function getUser(id: mongoose.Types.ObjectId) {
+async function getUserById(id: mongoose.Types.ObjectId) {
 
     if (!id) throw new Error("Id is required");
 
@@ -21,4 +21,4 @@ async function getUsers() {
     return users;
 }
 
-export { getUser, getUsers };
+export { getUserById, getUsers };

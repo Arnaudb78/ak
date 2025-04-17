@@ -11,6 +11,7 @@ export interface UserData {
     followers?: number;
     following?: number;
     posts?: number;
+    podium?: number;
 }
 
 async function createUser(body: UserData) {

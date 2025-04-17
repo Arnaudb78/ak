@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import AppBar from "@/components/app-bar";
 
 interface User {
     email: string;
@@ -35,9 +36,10 @@ export default function Profil() {
     
 
     return (
-        <div className="flex items-center justify-center h-screen">
-            <Card className="w-[350px]">
-                <CardHeader>
+        <>
+            <div className="flex items-center justify-center h-screen">
+                <Card className="w-[350px]">
+                    <CardHeader>
                     <CardTitle>Profil</CardTitle>
                     <CardDescription>Your profil informations.</CardDescription>
                 </CardHeader>
@@ -49,7 +51,9 @@ export default function Profil() {
                 <CardFooter className="flex justify-between">
                     <Button variant="outline" onClick={handleLogout}>Logout</Button>
                 </CardFooter>
-            </Card>
-        </div>
+                </Card>
+            </div>
+        <AppBar />
+        </>
     )
 }

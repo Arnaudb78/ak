@@ -1,5 +1,6 @@
 "use client";
 
+import AppBar from "@/components/app-bar";
 import CardChallenge from "@/components/card-challenge";
 import { CardPost } from "@/components/card-post";
 import { useRouter } from "next/navigation";
@@ -62,31 +63,34 @@ export default function Community() {
     }, []);
 
     return (
-        <div className="flex flex-col items-center justify-start h-screen bg-[#F5F5F5] py-10">
-            <h1 className="text-xl font-bold">Re_store</h1>
-            <div className="flex flex-col items-center justify-start px-10 py-10 w-full">
-                <CardChallenge challenge={challenges || {
-                    _id: '',
-                    title: '',
-                    description: '',
-                    image: '',
-                    month: ''
-                }} />
+        <>
+            <div className="flex flex-col items-center justify-start h-full bg-[#F5F5F5] py-10">
+                <h1 className="text-xl font-bold">Re_store</h1>
+                <div className="flex flex-col items-center justify-start px-10 py-10 w-full">
+                    <CardChallenge challenge={challenges || {
+                        _id: '',
+                        title: '',
+                        description: '',
+                        image: '',
+                        month: ''
+                    }} />
+                </div>
+                        
+                <div className="flex flex-col items-center justify-start gap-8 px-10">
+                    {data.posts.map((post) => {
+                        const author = data.authors.find(a => a._id === post.author);
+                        if (!author) return null;
+                        return (
+                            <CardPost 
+                                key={post._id} 
+                                post={post}
+                                author={author} 
+                            />
+                        );
+                    })}
+                </div>
             </div>
-                    
-            <div className="flex flex-col items-center justify-start gap-8 px-10">
-                {data.posts.map((post) => {
-                    const author = data.authors.find(a => a._id === post.author);
-                    if (!author) return null;
-                    return (
-                        <CardPost 
-                            key={post._id} 
-                            post={post}
-                            author={author} 
-                        />
-                    );
-                })}
-            </div>
-        </div>
+            <AppBar />
+        </>
     );
 }

@@ -45,7 +45,6 @@ export default function CardPost({ post, author }: CardPostProps) {
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col items-center">
-                    <h2 className="text-lg font-medium mb-2">Before</h2>
                     <img 
                         src={post.pictureBefore} 
                         alt="Picture Before" 
@@ -54,7 +53,6 @@ export default function CardPost({ post, author }: CardPostProps) {
                     />
                 </div>
                 <div className="flex flex-col items-center">
-                    <h2 className="text-lg font-medium mb-2">After</h2>
                     <img 
                         src={post.pictureAfter} 
                         alt="Picture After" 

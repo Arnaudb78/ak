@@ -1,9 +1,9 @@
-import Image from "next/image";
-
 export default function Home() {
   return (
     <>
-      <p>Hackaton</p>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <p className="text-4xl font-bold">Hackaton</p>
+    </div>
     </>
   );
 }

@@ -35,7 +35,7 @@ export default function CardPost({ post, author }: CardPostProps) {
                     />
                     <div>
                         <h1 className="font-semibold">{author.firstname} {author.lastname}</h1>
-                        <p className="text-xs text-gray-500">A économiser {author.economy ? author.economy : 0}% de Co2 !</p>
+                        <p className="text-xs text-gray-500">A économiser {author.economy ? author.economy : 0}kg de Co2 !</p>
                     </div>
                     <div className="flex flex-col items-end justify-center w-20">
                         <p>{post.likes ? post.likes : 0}</p> 

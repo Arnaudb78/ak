@@ -23,8 +23,11 @@ export async function POST(req: Request) {
         if (picture) {
             pictureUrl = await saveImage(picture);
         }
+        const followers = 0;
+        const following = 0;
+        const posts = 0;
 
-        const newUser = await createUser({ firstname, lastname, email, password, picture: pictureUrl || undefined });
+        const newUser = await createUser({ firstname, lastname, email, password, picture: pictureUrl || undefined, followers, following, posts });
 
         if (newUser.message) {
             return NextResponse.json({ message: newUser.message }, { status: 400 });

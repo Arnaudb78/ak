@@ -8,6 +8,9 @@ export interface UserData {
     email: string;
     password: string;
     picture?: string;
+    followers?: number;
+    following?: number;
+    posts?: number;
 }
 
 async function createUser(body: UserData) {

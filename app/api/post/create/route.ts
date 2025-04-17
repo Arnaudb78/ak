@@ -29,6 +29,8 @@ export async function POST(req: Request) {
         if (newPost.message) {
             return NextResponse.json({ message: newPost.message }, { status: 400 });
         }
+        authorId.posts = authorId.posts + 1;
+        await authorId.save();
 
         return NextResponse.json(newPost, { status: 201 });
         

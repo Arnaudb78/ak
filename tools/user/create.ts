@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import dbConnect from "@/database/connect";
 import User from "@/models/User";
 

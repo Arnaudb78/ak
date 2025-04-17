@@ -1,6 +1,4 @@
 import { NextResponse } from "next/server";
-import dbConnect from "@/database/connect";
-import User from "@/models/User";
 import { createUser } from "@/tools/user/create";
 
 export async function POST(req: Request) {

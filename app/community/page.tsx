@@ -76,7 +76,7 @@ export default function Community() {
                     }} />
                 </div>
                         
-                <div className="flex flex-col items-center justify-start gap-8 px-10">
+                <div className="flex flex-col items-center justify-start gap-4 px-10">
                     {data.posts.map((post) => {
                         const author = data.authors.find(a => a._id === post.author);
                         if (!author) return null;

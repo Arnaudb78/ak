@@ -1,11 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SignUp } from "@/components/sign-up";
 import { SignIn } from "@/components/sign-in";
-
+import { useRouter } from "next/navigation";
 export default function Home() {
   const [isSignIn, setIsSignIn] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    if (user) {
+      router.push("/community");
+    }
+  }, []);
 
   return (
     <>

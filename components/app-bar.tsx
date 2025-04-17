@@ -3,7 +3,7 @@ import { Home, Plus, Medal, User, ClipboardList } from 'lucide-react';
 
 export default function AppBar() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-sm border-t border-gray-200">
+    <nav className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xs rounded-t-2xl border-t border-gray-200 p-4">
       <div className="flex justify-around items-center h-16 px-4">
         <Link href="/community" className="flex flex-col items-center">
           <Home className="h-6 w-6" />

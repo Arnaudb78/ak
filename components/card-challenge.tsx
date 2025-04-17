@@ -10,7 +10,7 @@ interface Challenge {
 
 export default function CardChallenge({ challenge }: { challenge: Challenge }) {
     return (
-        <div className="flex flex-col items-start justify-center gap-4 bg-[#FFC9BA] rounded-lg p-4 w-full h-full">
+        <div className="flex flex-col items-start justify-center gap-4 bg-[#FFC9BA] rounded-2xl p-4 w-full h-full">
             <div className="w-full flex justify-end">
                 {challenge.image && (
                     <div className="w-24 h-24">

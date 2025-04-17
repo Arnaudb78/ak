@@ -22,7 +22,7 @@ interface CardPostProps {
 
 export default function CardPost({ post, author }: CardPostProps) {
     return (
-        <div className="w-full max-w-2xl p-4 bg-[#D2EDFF] rounded-lg shadow-md">
+        <div className="w-full max-w-2xl p-4 bg-[#D2EDFF] rounded-2xl shadow-md">
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-4">
                     <img 
@@ -49,10 +49,8 @@ export default function CardPost({ post, author }: CardPostProps) {
                     <img 
                         src={post.pictureBefore} 
                         alt="Picture Before" 
-                        className="w-full h-64 object-cover rounded-lg" 
+                        className="w-full h-48 object-cover rounded-lg" 
                         loading="lazy"
-                        width={400}
-                        height={256}
                     />
                 </div>
                 <div className="flex flex-col items-center">
@@ -60,10 +58,8 @@ export default function CardPost({ post, author }: CardPostProps) {
                     <img 
                         src={post.pictureAfter} 
                         alt="Picture After" 
-                        className="w-full h-64 object-cover rounded-lg" 
+                        className="w-full h-48 object-cover rounded-lg" 
                         loading="lazy"
-                        width={400}
-                        height={256}
                     />
                 </div>
             </div>

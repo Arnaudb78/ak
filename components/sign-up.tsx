@@ -1,10 +1,5 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { CardFooter } from "./ui/card";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -64,49 +59,30 @@ export function SignUp() {
   };
 
     return (
-        <Card className="w-[350px]">
-            <CardHeader>
-                <CardTitle>Create User</CardTitle>
-                <CardDescription>Create a new user in one-click.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <form id="user-form" onSubmit={handleSubmit}>
-                    <div className="grid w-full items-center gap-4">
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="firstname">Firstname</Label>
-                            <Input id="firstname" placeholder="Firstname of your account" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
-                        </div>
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="lastname">Lastname</Label>
-                            <Input id="lastname" placeholder="Lastname of your account" value={lastname} onChange={(e) => setLastname(e.target.value)} />
-                        </div>
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="picture">Picture</Label>
-                            <Input id="picture" type="file" placeholder="Picture of your account" onChange={(e) => setPicture(e.target.files?.[0] || null)} />
-                        </div>
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="email">Email</Label>
-                            <Input id="email" type="email" placeholder="Email of your account" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        </div>
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="password">Password</Label>
-                            <Input
-                                id="password"
-                                type="password"
-                                placeholder="Password of your account"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </form>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-                <Button variant="outline">Cancel</Button>
-                <Button type="submit" form="user-form">
-                    Create
-                </Button>
-            </CardFooter>
-        </Card>
+        <form onSubmit={handleSubmit} className="flex flex-col w-full p-6 gap-4">
+            <div className="flex flex-col bg-[#F4F4F4] rounded-md py-2 px-4 w-full">
+                <p className="text-sm opacity-50">Firstname</p>
+                <input id="firstname" placeholder="" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+            </div>
+            <div className="flex flex-col bg-[#F4F4F4] rounded-md py-2 px-4 w-full">
+                <p className="text-sm opacity-50">Lastname</p>
+                <input id="lastname" placeholder="" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+            </div>
+            <div className="flex flex-col bg-[#F4F4F4] rounded-md py-2 px-4 w-full">
+                <p className="text-sm opacity-50">Email</p>
+                <input id="email" type="email" placeholder="" value={email} onChange={(e) => setEmail(e.target.value)} />
+            </div>
+            <div className="flex flex-col bg-[#F4F4F4] rounded-md py-2 px-4 w-full">
+                <p className="text-sm opacity-50">Password</p>
+                <input id="password" type="password" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} />
+            </div>
+            <div className="flex flex-col bg-[#F4F4F4] rounded-md py-2 px-4 w-full">
+                <p className="text-sm opacity-50">Profile Picture</p>
+                <input id="picture" type="file" onChange={(e) => setPicture(e.target.files?.[0] || null)} />
+            </div>
+            <div className="flex flex-col gap-2 pt-10">
+                <button type="submit" className="bg-black text-white font-bold rounded-md py-3 px-4 w-full">Create Account</button>
+            </div>
+        </form>
     );
 }

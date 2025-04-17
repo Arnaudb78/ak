@@ -1,10 +1,5 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { CardFooter } from "./ui/card";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -46,37 +41,20 @@ export function SignIn() {
   };
 
     return (
-        <Card className="w-[350px]">
-            <CardHeader>
-                <CardTitle>Sign In</CardTitle>
-                <CardDescription>Sign in to your account.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                <form id="sign-in-form" onSubmit={handleSubmit}>
-                    <div className="grid w-full items-center gap-4">
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="sign-in-email">Email</Label>
-                            <Input id="sign-in-email" type="email" placeholder="Email of your account" value={email} onChange={(e) => setEmail(e.target.value)} />
-                        </div>
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="sign-in-password">Password</Label>
-                            <Input
-                                id="sign-in-password"
-                                type="password"
-                                placeholder="Password of your account"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </div>
-                    </div>
-                </form>
-            </CardContent>
-            <CardFooter className="flex justify-between">
-                <Button variant="outline">Cancel</Button>
-                <Button type="submit" form="sign-in-form">
-                    Sign In
-                </Button>
-            </CardFooter>
-        </Card>
+        <>
+            <form onSubmit={handleSubmit} className="flex flex-col w-full p-6 gap-4">
+                <div className="flex flex-col bg-[#F4F4F4] rounded-md py-2 px-4 w-full">
+                    <p className="text-sm opacity-50">Email</p>
+                    <input id="sign-in-email" type="email" placeholder="" value={email} onChange={(e) => setEmail(e.target.value)} />
+                </div>
+                <div className="flex flex-col bg-[#F4F4F4] rounded-md py-2 px-4 w-full">
+                    <p className="text-sm opacity-50">Password</p>
+                    <input id="sign-in-password" type="password" placeholder="" value={password} onChange={(e) => setPassword(e.target.value)} />
+                </div>
+                <div className="flex flex-col gap-2 pt-10">
+                    <button type="submit" className="bg-black text-white font-bold rounded-md py-3 px-4 w-full">Connexion</button>
+                </div>
+            </form>
+        </>
     );
 }

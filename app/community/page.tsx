@@ -2,6 +2,7 @@
 
 import CardChallenge from "@/components/card-challenge";
 import { CardPost } from "@/components/card-post";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 interface PostData {
@@ -36,8 +37,16 @@ interface ChallengeData {
 export default function Community() {
     const [data, setData] = useState<ApiResponse>({ posts: [], authors: [] });
     const [challenges, setChallenges] = useState<ChallengeData>();
+    const router = useRouter();
 
     useEffect(() => {
+        const verifyUser = async () => {
+            const user = localStorage.getItem("user");
+            if (!user) {
+                router.push("/");
+            }
+        }
+        verifyUser();
         const fetchPosts = async () => {
             const response = await fetch("/api/post/get");
             const data = await response.json();

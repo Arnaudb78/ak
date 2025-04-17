@@ -3,7 +3,8 @@ import User from "@/models/User";
 
 // Define the interface for user data
 export interface UserData {
-    name: string;
+    firstname: string;
+    lastname: string;
     email: string;
     password: string;
 }

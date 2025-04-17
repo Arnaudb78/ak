@@ -6,16 +6,18 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { CardFooter } from "./ui/card";
 import { useState } from "react";
-
+import { useRouter } from "next/navigation";
 export function SignUp() {
-    const [name, setName] = useState("");
+    const [firstname, setFirstname] = useState("");
+    const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
   
-      if (!name || !email || !password) {
+      if (!firstname || !lastname || !email || !password) {
           alert("Please fill in all fields");
           return;
       }
@@ -25,7 +27,7 @@ export function SignUp() {
           headers: {
               "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, email, password }),
+          body: JSON.stringify({ firstname, lastname, email, password }),
       });
   
       const data = await response.json();
@@ -35,7 +37,12 @@ export function SignUp() {
           return;
       }
 
-      setName("");
+      localStorage.setItem("user", JSON.stringify(data));
+
+      router.push("/community");
+
+      setFirstname("");
+      setLastname("");
       setEmail("");
       setPassword("");
   };
@@ -50,8 +57,12 @@ export function SignUp() {
                 <form id="user-form" onSubmit={handleSubmit}>
                     <div className="grid w-full items-center gap-4">
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="name">Name</Label>
-                            <Input id="name" placeholder="Name of your account" value={name} onChange={(e) => setName(e.target.value)} />
+                            <Label htmlFor="firstname">Firstname</Label>
+                            <Input id="firstname" placeholder="Firstname of your account" value={firstname} onChange={(e) => setFirstname(e.target.value)} />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="lastname">Lastname</Label>
+                            <Input id="lastname" placeholder="Lastname of your account" value={lastname} onChange={(e) => setLastname(e.target.value)} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="email">Email</Label>

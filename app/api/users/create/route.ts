@@ -3,16 +3,16 @@ import { createUser } from "@/tools/user/create";
 
 export async function POST(req: Request) {
     const body = await req.json();
-    const { name, email, password } = body;
+    const { firstname, lastname, email, password } = body;
 
-    if (!name || !email || !password) {
+    if (!firstname || !lastname || !email || !password) {
         return NextResponse.json({ message: "Missing fields" }, { status: 400 });
     }
 
     try {
         console.log("Creating user...");
     
-        const newUser = await createUser({ name, email, password });
+        const newUser = await createUser({ firstname, lastname, email, password });
 
         if (newUser.message) {
             return NextResponse.json({ message: newUser.message }, { status: 400 });

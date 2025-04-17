@@ -39,7 +39,7 @@ export function SignIn() {
 
       localStorage.setItem("user", JSON.stringify(data));
 
-      router.push("/profil");
+      router.push("/community");
 
       setEmail("");
       setPassword("");

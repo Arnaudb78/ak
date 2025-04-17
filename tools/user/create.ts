@@ -7,6 +7,7 @@ export interface UserData {
     lastname: string;
     email: string;
     password: string;
+    picture?: string;
 }
 
 async function createUser(body: UserData) {

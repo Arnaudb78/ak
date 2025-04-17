@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     email: String,
     password: String,
     picture: String,
+    economy: {
+        type: Number,
+        default: 10
+    },
 });
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);

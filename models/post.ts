@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const postSchema = new mongoose.Schema({
-    picture_before: String,
-    picture_after: String,
-    content: String,
+    pictureBefore: String,
+    pictureAfter: String,
+    likes: Number,
     author: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"

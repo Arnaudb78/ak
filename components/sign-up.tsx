@@ -7,12 +7,23 @@ import { Button } from "./ui/button";
 import { CardFooter } from "./ui/card";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 export function SignUp() {
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [picture, setPicture] = useState<File | null>(null);
     const router = useRouter();
+
+    const convertToBase64 = (file: File): Promise<string> => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = error => reject(error);
+        });
+    };
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -21,13 +32,18 @@ export function SignUp() {
           alert("Please fill in all fields");
           return;
       }
+
+      let pictureBase64 = null;
+      if (picture) {
+          pictureBase64 = await convertToBase64(picture);
+      }
   
       const response = await fetch("/api/users/create", {
           method: "POST",
           headers: {
               "Content-Type": "application/json",
           },
-          body: JSON.stringify({ firstname, lastname, email, password }),
+          body: JSON.stringify({ firstname, lastname, email, password, picture: pictureBase64 }),
       });
   
       const data = await response.json();
@@ -63,6 +79,10 @@ export function SignUp() {
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="lastname">Lastname</Label>
                             <Input id="lastname" placeholder="Lastname of your account" value={lastname} onChange={(e) => setLastname(e.target.value)} />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="picture">Picture</Label>
+                            <Input id="picture" type="file" placeholder="Picture of your account" onChange={(e) => setPicture(e.target.files?.[0] || null)} />
                         </div>
                         <div className="flex flex-col space-y-1.5">
                             <Label htmlFor="email">Email</Label>

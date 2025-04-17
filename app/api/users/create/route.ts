@@ -1,9 +1,11 @@
 import { NextResponse } from "next/server";
 import { createUser } from "@/tools/user/create";
+import User from "@/models/User";
+import { saveImage } from "@/tools/save-pic";
 
 export async function POST(req: Request) {
     const body = await req.json();
-    const { firstname, lastname, email, password } = body;
+    const { firstname, lastname, email, password, picture } = body;
 
     if (!firstname || !lastname || !email || !password) {
         return NextResponse.json({ message: "Missing fields" }, { status: 400 });
@@ -11,8 +13,18 @@ export async function POST(req: Request) {
 
     try {
         console.log("Creating user...");
-    
-        const newUser = await createUser({ firstname, lastname, email, password });
+
+        const user = await User.findOne({ email });
+
+        if (user) {
+            return NextResponse.json({ message: "User already exists" }, { status: 400 });
+        }
+        let pictureUrl = null;
+        if (picture) {
+            pictureUrl = await saveImage(picture);
+        }
+
+        const newUser = await createUser({ firstname, lastname, email, password, picture: pictureUrl || undefined });
 
         if (newUser.message) {
             return NextResponse.json({ message: newUser.message }, { status: 400 });

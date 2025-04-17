@@ -2,10 +2,10 @@ import dbConnect from "@/database/connect";
 import Post from "@/models/post";
 
 export interface PostData {
-    picture_before: string;
-    picture_after: string;
-    content: string;
+    pictureBefore: string;
+    pictureAfter: string;
     author: string;
+    likes: number;
 }
 
 async function createPost(body: PostData) {

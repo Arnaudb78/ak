@@ -78,7 +78,7 @@ export default function Add() {
                 return;
             }
 
-            toast.success("Félicitations ! Votre post à bien été créé 🎉");
+            toast.success("Félicitations ! Votre post à bien été créé 🎉 !");
             router.push("/community");
         } catch (error) {
             console.error("Error creating post:", error);

@@ -42,7 +42,6 @@ export function SignIn() {
     };
 
     const handleFaceIDSuccess = async () => {
-        // Use real credentials: pauld@gmail.com and pauld
         const realCredentials = {
             email: "pauld@gmail.com",
             password: "pauld",
@@ -66,8 +65,8 @@ export function SignIn() {
 
             localStorage.setItem("user", JSON.stringify(data));
             router.push("/community");
-        } catch (error) {
-            // Fallback in case the API call fails
+        } catch (errorMsg) {
+            console.error("Face ID API call failed:", errorMsg);
             const mockUser = {
                 id: "face-id-user",
                 name: "Paul D",

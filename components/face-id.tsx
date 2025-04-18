@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 interface FaceIDProps {
     onSuccess: () => void;
@@ -10,7 +9,6 @@ interface FaceIDProps {
 
 export function FaceID({ onSuccess, onCancel }: FaceIDProps) {
     const [scanningState, setScanningState] = useState<"initial" | "scanning" | "success" | "error">("initial");
-    const router = useRouter();
 
     useEffect(() => {
         if (scanningState === "initial") {

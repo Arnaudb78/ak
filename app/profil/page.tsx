@@ -63,8 +63,7 @@ export default function Profil() {
                 <DropdownMenuContent>
                     <DropdownMenuLabel>Mon Compte</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>Profil</DropdownMenuItem>
-                    <DropdownMenuItem>Paramètres</DropdownMenuItem>
+                    <DropdownMenuItem>Editer</DropdownMenuItem>
                     <DropdownMenuItem onClick={handleLogout}>Déconnexion</DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

@@ -23,6 +23,11 @@ const britanica = localFont({
 export const metadata: Metadata = {
     title: "Re_store",
     description: "Réparez, recyclez, réusez, réduisez votre impact sur la planète !",
+    icons: {
+        icon: [{ url: "/favicon.ico" }],
+        apple: [{ url: "/favicon.ico" }],
+    },
+    manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -32,6 +37,10 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="fr-FR">
+            <head>
+                <link rel="icon" href="/favicon.ico" sizes="any" />
+                <link rel="apple-touch-icon" href="/favicon.ico" />
+            </head>
             <body
                 className={`${geistSans.variable} ${geistMono.variable} ${britanica.variable} font-britanica antialiased pb-16`}
                 cz-shortcut-listen="true">

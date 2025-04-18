@@ -1,5 +1,11 @@
-import { writeFile } from 'fs/promises';
-import { join } from 'path';
+import { put } from '@vercel/blob';
+
+// Configure Blob client
+const blobConfig = {
+  token: process.env.BLOB_READ_WRITE_TOKEN,
+  storeId: process.env.BLOB_STORE_ID,
+  baseUrl: process.env.BLOB_BASE_URL,
+};
 
 export async function saveImage(base64Data: string): Promise<string> {
   try {
@@ -20,15 +26,15 @@ export async function saveImage(base64Data: string): Promise<string> {
     const fileExtension = mimeType === 'jpeg' ? 'jpg' : mimeType; // Convert jpeg to jpg for consistency
     const fileName = `${uniqueId}.${fileExtension}`;
 
-    // Define the path where the image will be saved
-    const publicPath = join(process.cwd(), 'public', 'images', fileName);
-    const dbPath = `/images/${fileName}`;
+    // Upload to Vercel Blob Storage
+    const blob = await put(fileName, buffer, {
+      access: 'public',
+      contentType: `image/${mimeType}`,
+      ...blobConfig,
+    });
 
-    // Save the file
-    await writeFile(publicPath, buffer);
-
-    // Return the path that should be stored in the database
-    return dbPath;
+    // Return the URL of the uploaded blob
+    return blob.url;
   } catch (error) {
     console.error('Error saving image:', error);
     throw new Error('Failed to save image');

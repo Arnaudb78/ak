@@ -11,11 +11,14 @@ import { useRouter } from "next/navigation";
 export function FormAddPost() {
     const [pictureBefore, setPictureBefore] = useState<File | null>(null);
     const [pictureAfter, setPictureAfter] = useState<File | null>(null);
+    const [selectedTab, setSelectedTab] = useState<'before' | 'after'>('before');
     const router = useRouter();
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, setter: (file: File | null) => void) => {
         if (e.target.files && e.target.files[0]) {
             setter(e.target.files[0]);
+            // Switch to the other tab after selecting a picture
+            setSelectedTab(selectedTab === 'before' ? 'after' : 'before');
         }
     };
 
@@ -83,29 +86,58 @@ export function FormAddPost() {
             <CardContent>
                 <form id="user-form" onSubmit={handleSubmit}>
                     <div className="grid w-full items-center gap-4">
-                        <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="pictureBefore">Picture Before</Label>
-                            <Input 
-                                id="pictureBefore" 
-                                type="file" 
-                                accept="image/*"
-                                onChange={(e) => handleFileChange(e, setPictureBefore)} 
-                            />
+                        <div className="flex items-center justify-between w-full p-1 rounded-3xl bg-[#F4F4F4]">
+                            <p 
+                                className={`cursor-pointer w-[48%] text-center py-3 rounded-2xl ${
+                                    selectedTab === 'before' ? 'bg-black text-white font-bold' : ''
+                                }`}
+                                onClick={() => setSelectedTab('before')}
+                            >
+                                First Picture
+                            </p>
+                            <p 
+                                className={`cursor-pointer w-[48%] text-center py-3 rounded-2xl ${
+                                    selectedTab === 'after' ? 'bg-black text-white font-bold' : ''
+                                }`}
+                                onClick={() => setSelectedTab('after')}
+                            >
+                                Second Picture
+                            </p>
                         </div>
                         <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="pictureAfter">Picture After</Label>
-                            <Input 
-                                id="pictureAfter" 
-                                type="file" 
-                                accept="image/*"
-                                onChange={(e) => handleFileChange(e, setPictureAfter)} 
-                            />
+                            {selectedTab === 'before' ? (
+                                <>
+                                    <Label htmlFor="pictureBefore">First Picture</Label>
+                                    <Input 
+                                        id="pictureBefore" 
+                                        type="file" 
+                                        accept="image/*"
+                                        onChange={(e) => handleFileChange(e, setPictureBefore)} 
+                                    />
+                                    {pictureBefore && (
+                                        <p className="text-sm text-green-600">First picture selected ✓</p>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <Label htmlFor="pictureAfter">Second Picture</Label>
+                                    <Input 
+                                        id="pictureAfter" 
+                                        type="file" 
+                                        accept="image/*"
+                                        onChange={(e) => handleFileChange(e, setPictureAfter)} 
+                                    />
+                                    {pictureAfter && (
+                                        <p className="text-sm text-green-600">Second picture selected ✓</p>
+                                    )}
+                                </>
+                            )}
                         </div>
                     </div>
                 </form>
             </CardContent>
             <CardFooter className="flex justify-between">
-                <Button variant="outline">Cancel</Button>
+                <Button variant="outline" onClick={() => router.push("/community")}>Cancel</Button>
                 <Button type="submit" form="user-form">
                     Create
                 </Button>
